@@ -94,6 +94,10 @@ function processJSON() {
   
   // grab the file from google drive, as a blob, then string, so we can parse the JSON inside it
   var file = DriveApp.getFileById(tweet_json_file_id);
+  var fileSize = file.getSize();
+  if(fileSize > 25165824) {
+    throw 'Tweet.js file too large for current method. Split the file into increments - 24MB max size (making sure JSON remains intact).';
+  } 
   var fileBlob = file.getBlob()
   var fileBlobAsString = fileBlob.getDataAsString();
 
